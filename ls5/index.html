@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+      <!-- Basic Page Needs
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      <meta charset="utf-8">
+      <title>My LS5 Prototype</title>
+      <meta name="description" content="">
+      <meta name="author" content="jingle Chen">
+
+      <!-- Mobile Specific Metas
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- FONT
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+      <!-- CSS
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      <link rel="stylesheet" href="css/normalize.css">
+      <link rel="stylesheet" href="css/skeleton.css">
+      <link rel="stylesheet" href="css/mycss.css">
+
+      <!-- Favicon
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+      <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        
+    </script>
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <img id="frame" height="480px" width="800px" src="images/Frame.png">
+    <div id="interface1">
+        <div class="questionA">
+            <p id="iconl">P</p>
+            <p id="iconr">X</p>
+            <p class="title">Where would you like to park?</p>
+        </div>
+        <div class="answerA">
+            <div><p id="answer1">"Nearby"</p></div>
+            <div id="answer2"><p>"My Destination"</p></div>
+            <div><div id="answer3"><p>Say a location</p></div></div>
+        </div>
+        <div class="questionB">
+            <p id="iconl">P</p>
+            <p id="iconr">X</p>
+            <p class="title">Do you want to start parking around your arrival time?</p>
+        </div>
+        <div class="answerB">
+            <div id="answerB1"><p>"Yes"</p></div>
+            <div><p id="answerB2">"No"</p></div>
+        </div>
+        <div class="questionC">
+            <p id="iconl">P</p>
+            <p id="iconr">X</p>
+            <p class="title">What time will you leave?</p>
+        </div>
+        <div class="answerC">
+            <div id="answerC1"><p>00</p></div>
+            <div id="answerC2"><p>:</p></div>
+            <div id="answerC3"><p>00</p></div>
+            <div id="answerAM"><p>AM</p></div>
+            <div id="answerblock"></div>
+            <div id="answerPM"><p>PM</p></div>
+        </div>
+        <div class="questionD">
+            <p id="iconl">P</p>
+            <p id="iconr">X</p>
+            <p class="title">Here is the recommended parking spot</p>
+        </div>
+        <div class="answerD">
+            <div id="answerD1"><p>"Sounds Good"</p></div>
+            <div id="answerD2"><p>"Cheaper Option"</p></div>
+            <div><div id="answerD3"><p>"Closer Option"</p></div></div>
+        </div>
+        <div class="questionE">
+            <p id="iconl">P</p>
+            <p id="iconr">X</p>
+            <p class="title">Do you want to navigate to your parking spot?</p>
+        </div>
+        <div class="answerE">
+            <div id="answerE1"><p>"Yes"</p></div>
+            <div><p id="answerE2">"No"</p></div>
+        </div>
+        <div class="questionF">
+            <p id="iconl">P</p>
+            <p id="iconr">X</p>
+            <p class="title">Thank you! Your QR code has been saved on your phone.</p>
+        </div>
+    </div>
+  </div>
+    
+      Enter command: <input type="text" id="command" name="command">
+      <input type="submit" value="Submit" id="submit">
+   
+    <script>
+        $(document).ready(function(){
+        // Get value on button click and show alert
+            $("#submit").click(function(){
+                var str = $("#command").val();
+                if (str.includes("siri")) {
+                    playAud("start");
+                }else if (str.includes("destination")) {
+                    $("#answer2").css("background-color", "#0B6CFF");
+                    $("#answer1").css("color", "#919191");
+                    $("#answer3").css("background-color", "919191");
+                    $("#answer3").css("color", "747474");
+                    
+                    $(".questionA").delay(2000).fadeOut();
+                    $(".answerA").delay(2000).fadeOut();
+                    $(".questionB").delay(2000).fadeIn();
+                    $(".answerB").delay(2000).fadeIn();
+                    playAud("confirm").delay(2000);
+                } else if (str.includes("arrival")) {
+                    $("#answerB1").css("background-color", "#0B6CFF");
+                    $("#answerB2").css("color", "#919191");
+                    
+                    $(".questionB").delay(2000).fadeOut();
+                    $(".answerB").delay(2000).fadeOut();
+                    $(".questionC").delay(2000).fadeIn();
+                    $(".answerC").delay(2000).fadeIn();
+                    playAud("leave").delay(2000);
+                } else if (str.includes("1AM")) {
+                    $(".answerC").css("background-color", "#0B6CFF");
+                    $("#answerC1").css("color", "#000000");
+                    $("#answerC3").css("color", "#000000");
+                    $("#answerPM").css("display", "none");
+                    $("#answerAM").css("top", "28px");
+                    $("#answerC1 p").html("01");
+                    $("#answerblock").css("display", "none");
+                    
+                    $(".questionC").delay(2000).fadeOut();
+                    $(".answerC").delay(2000).fadeOut();
+                    $(".questionD").delay(2000).fadeIn();
+                    $(".answerD").delay(2000).fadeIn();
+                    playAud("spot").delay(2000);
+                } else if (str.includes("Sounds")) {
+                    $("#answerD1").css("background-color", "#0B6CFF");
+                    $("#answerD2").css("color", "#919191");
+                    $("#answerD3").css("color", "#919191");
+                    
+                    $(".questionD").delay(2000).fadeOut();
+                    $(".answerD").delay(2000).fadeOut();
+                    $(".questionE").delay(2000).fadeIn();
+                    $(".answerE").delay(2000).fadeIn();
+                    playAud("nav").delay(2000);
+                } else if (str.includes("navigate")) {
+                    $("#answerE1").css("background-color", "#0B6CFF");
+                    $("#answerE2").css("color", "#919191");
+                    
+                    $(".questionE").delay(2000).fadeOut();
+                    $(".answerE").delay(2000).fadeOut();
+                    $(".questionF").delay(2000).fadeIn();
+                    $(".answerF").delay(2000).fadeIn();
+                    playAud("end").delay(2000);
+                }
+            });
+        });
+    </script>
+
+    <audio id="start">
+      <source src="start.mp3" type="audio/mpeg">
+      <source src="start.ogg" type="audio/ogg">
+    </audio>
+    
+    <audio id="confirm">
+      <source src="confirmation.mp3" type="audio/mpeg">
+      <source src="confirmation.ogg" type="audio/ogg">
+    </audio>
+    
+    <audio id="leave">
+      <source src="leave.mp3" type="audio/mpeg">
+      <source src="leave.ogg" type="audio/ogg">
+    </audio>
+    
+    <audio id="spot">
+      <source src="parking%20spot.mp3" type="audio/mpeg">
+      <source src="parking%20spot.ogg" type="audio/ogg">
+    </audio>
+    
+    <audio id="nav">
+      <source src="nav.mp3" type="audio/mpeg">
+      <source src="nav.mp3" type="audio/ogg">
+    </audio>
+    
+    <audio id="end">
+      <source src="Ending.mp3" type="audio/mpeg">
+      <source src="Ending.ogg" type="audio/ogg">
+    </audio>
+
+    <script> 
+        function playAud(command) { 
+            var aud = document.getElementById(command); 
+            aud.play(); 
+        } 
+    </script> 
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
